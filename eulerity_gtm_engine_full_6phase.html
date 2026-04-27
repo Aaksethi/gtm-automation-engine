@@ -1,0 +1,273 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;600;800&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.root { font-family: 'Syne', sans-serif; color: var(--color-text-primary); }
+.header { padding: 20px 0 12px; border-bottom: 1px solid var(--color-border-tertiary); margin-bottom: 20px; }
+.header h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.header p { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+.flow { margin-bottom: 16px; border-radius: 14px; overflow: hidden; border: 0.5px solid var(--color-border-tertiary); }
+.flow-header { padding: 13px 18px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+.flow-num { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; flex-shrink: 0; }
+.flow-title { font-size: 14px; font-weight: 600; }
+.flow-sub { font-size: 11px; opacity: 0.7; margin-top: 1px; font-family: 'JetBrains Mono', monospace; }
+.flow-body { display: none; padding: 14px 18px 18px; background: var(--color-background-primary); }
+.flow-body.open { display: block; }
+.nodes { display: flex; align-items: stretch; gap: 0; overflow-x: auto; }
+.node { flex: 1; min-width: 140px; border-radius: 9px; border: 0.5px solid var(--color-border-tertiary); overflow: hidden; cursor: pointer; transition: transform 0.12s; background: var(--color-background-secondary); }
+.node:hover { transform: translateY(-2px); }
+.node-top { padding: 10px 12px 8px; display: flex; align-items: flex-start; gap: 8px; }
+.node-icon { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.node-name { font-size: 12px; font-weight: 600; color: var(--color-text-primary); line-height: 1.3; }
+.node-type { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--color-text-tertiary); margin-top: 1px; }
+.node-detail { display: none; padding: 8px 12px 10px; border-top: 0.5px solid var(--color-border-tertiary); font-size: 11px; color: var(--color-text-secondary); line-height: 1.6; font-family: 'JetBrains Mono', monospace; }
+.node.expanded .node-detail { display: block; }
+.arrow { display: flex; align-items: center; padding: 0 4px; color: var(--color-text-tertiary); font-size: 15px; flex-shrink: 0; }
+.arrow-down { text-align: center; padding: 6px 0; color: var(--color-text-tertiary); font-size: 15px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px; padding-top: 14px; border-top: 0.5px solid var(--color-border-tertiary); }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-secondary); }
+.legend-dot { width: 9px; height: 9px; border-radius: 3px; }
+.hint { font-size: 11px; color: var(--color-text-tertiary); text-align: center; padding: 10px 0 0; font-family: 'JetBrains Mono', monospace; }
+.phase-tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-weight: 600; margin-left: 8px; vertical-align: middle; }
+.info-box { padding: 9px 12px; border-radius: 8px; background: var(--color-background-secondary); font-size: 11px; color: var(--color-text-secondary); font-family: 'JetBrains Mono', monospace; margin-bottom: 12px; line-height: 1.7; border: 0.5px solid var(--color-border-tertiary); }
+</style>
+
+<div class="root">
+<div class="header">
+  <h1>Eulerity GTM Automation Engine</h1>
+  <p>6-phase system · Google Sheets → Clay → AI Agent → Gmail → Lead Scoring → AI Reply → Sales Handoff</p>
+</div>
+
+<!-- PHASE 1 -->
+<div class="flow">
+  <div class="flow-header" style="background:#EEEDFE" onclick="toggleFlow('p1')">
+    <div class="flow-num" style="background:#7F77DD;color:#EEEDFE">01</div>
+    <div style="flex:1">
+      <div class="flow-title" style="color:#3C3489">Email Validation</div>
+      <div class="flow-sub" style="color:#534AB7">HubSpot export → ZeroBounce API → clean verified list → back to HubSpot</div>
+    </div>
+    <span id="fi-p1" style="color:#3C3489;font-size:18px">+</span>
+  </div>
+  <div class="flow-body" id="p1">
+    <div class="info-box">Goal: Before any email goes out, ensure the 8–10k contact database is clean. Dead emails damage domain reputation and waste enrichment credits. This phase runs once on the full database, then only on new incoming contacts.</div>
+    <div class="nodes">
+      <div class="node" onclick="toggle(this)" style="border-color:#7F77DD">
+        <div class="node-top"><div class="node-icon" style="background:#EEEDFE">📥</div><div><div class="node-name">HubSpot API pull</div><div class="node-type">GET · contacts endpoint</div></div></div>
+        <div class="node-detail">Paginated GET request to HubSpot Contacts API. Pulls in batches of 100. Extracts: email, first name, last name, company, source, create date, lifecycle stage. n8n Loop node handles all pages automatically.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#7F77DD">
+        <div class="node-top"><div class="node-icon" style="background:#EEEDFE">⟺</div><div><div class="node-name">Deduplicate + filter</div><div class="node-type">n8n Code node</div></div></div>
+        <div class="node-detail">Removes duplicate emails. Filters contacts with no email address. Flags obvious fake patterns. Only unprocessed contacts with valid email format move forward.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#7F77DD">
+        <div class="node-top"><div class="node-icon" style="background:#EEEDFE">✓</div><div><div class="node-name">ZeroBounce Batch API</div><div class="node-type">POST · bulk validate</div></div></div>
+        <div class="node-detail">Sends all emails to ZeroBounce Batch API in one call. Polls every 30s until job completes. Returns status per email: valid, invalid, catch-all, spamtrap, unknown. No emails are sent — this is a lookup only. Valid + catch-all proceed. Invalid + spamtrap are flagged.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#7F77DD">
+        <div class="node-top"><div class="node-icon" style="background:#EEEDFE">📤</div><div><div class="node-name">Write back to HubSpot</div><div class="node-type">PATCH · contact property</div></div></div>
+        <div class="node-detail">Updates each HubSpot contact with custom property: email_verification_status = valid / invalid / catch-all. Invalid contacts: lifecycle stage → Unqualified. Valid contacts: tagged ready_for_enrichment = true. HubSpot stays the master record throughout.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 2 -->
+<div class="flow">
+  <div class="flow-header" style="background:#FAEEDA" onclick="toggleFlow('p2')">
+    <div class="flow-num" style="background:#EF9F27;color:#412402">02</div>
+    <div style="flex:1">
+      <div class="flow-title" style="color:#633806">Clay Enrichment + Segmentation</div>
+      <div class="flow-sub" style="color:#854F0B">Valid contacts → Clay waterfall → company size, industry, franchise count → segmented → back to HubSpot</div>
+    </div>
+    <span id="fi-p2" style="color:#633806;font-size:18px">+</span>
+  </div>
+  <div class="flow-body" id="p2">
+    <div class="info-box">Goal: Transform a raw name + email into a full profile. Clay's waterfall searches 75+ data providers simultaneously — if Provider A has no data, it tries Provider B automatically. This gives the AI enough context to write emails that feel genuinely researched.</div>
+    <div class="nodes">
+      <div class="node" onclick="toggle(this)" style="border-color:#EF9F27">
+        <div class="node-top"><div class="node-icon" style="background:#FAEEDA">🔗</div><div><div class="node-name">HubSpot → Clay</div><div class="node-type">native integration</div></div></div>
+        <div class="node-detail">Clay's native HubSpot integration pulls all contacts where email_verification_status = valid. Creates a Clay table where each row = one contact. Pre-populates with existing HubSpot data: name, email, company, source.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#EF9F27">
+        <div class="node-top"><div class="node-icon" style="background:#FAEEDA">🏢</div><div><div class="node-name">Clay waterfall enrichment</div><div class="node-type">75+ data providers</div></div></div>
+        <div class="node-detail">Enriches each contact across: job title, seniority, LinkedIn URL, company size, industry, HQ location, company revenue range, number of franchise locations, technology stack. Waterfall = if one provider fails, next tries automatically. Maximises fill rate on an 8-year-old database.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#EF9F27">
+        <div class="node-top"><div class="node-icon" style="background:#FAEEDA">🏷</div><div><div class="node-name">Segment classification</div><div class="node-type">Clay AI column</div></div></div>
+        <div class="node-detail">Clay AI column classifies each contact: Segment A = decision maker at franchise brand with 50+ locations (hot ICP). Segment B = marketing manager at mid-size multi-location. Segment C = non-marketing title. Segment D = insufficient data. Each segment gets a different email sequence.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#EF9F27">
+        <div class="node-top"><div class="node-icon" style="background:#FAEEDA">📤</div><div><div class="node-name">Push back to HubSpot</div><div class="node-type">Clay HubSpot sync</div></div></div>
+        <div class="node-detail">Clay pushes all enriched fields back to each HubSpot contact: job_title_enriched, company_size, industry, linkedin_url, segment_label, num_locations, enrichment_date. HubSpot is always the master record. Nothing lives in Clay long-term.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 3 -->
+<div class="flow">
+  <div class="flow-header" style="background:#EAF3DE" onclick="toggleFlow('p3')">
+    <div class="flow-num" style="background:#639922;color:#EAF3DE">03</div>
+    <div style="flex:1">
+      <div class="flow-title" style="color:#27500A">AI Personalized Email Generation + Send</div>
+      <div class="flow-sub" style="color:#3B6D11">HubSpot segments → Claude API → personalized email → HubSpot sends → tracks engagement</div>
+    </div>
+    <span id="fi-p3" style="color:#27500A;font-size:18px">+</span>
+  </div>
+  <div class="flow-body" id="p3">
+    <div class="info-box">Goal: Every contact receives an email that feels like it was written specifically for them — referencing their company name, franchise scale, and industry pain. Claude generates each email from the enriched profile. HubSpot sends and tracks every interaction.</div>
+    <div class="nodes">
+      <div class="node" onclick="toggle(this)" style="border-color:#639922">
+        <div class="node-top"><div class="node-icon" style="background:#EAF3DE">⏰</div><div><div class="node-name">Weekly schedule trigger</div><div class="node-type">n8n · every Monday 8am</div></div></div>
+        <div class="node-detail">Fires every Monday 8am. Pulls Segment A contacts from HubSpot where: segment_label = A AND last_email_sent_date is more than 7 days ago AND lifecycle_stage is not Customer. Batches into groups of 50 to respect API rate limits.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#639922">
+        <div class="node-top"><div class="node-icon" style="background:#EAF3DE">📝</div><div><div class="node-name">Build personalization context</div><div class="node-type">n8n Set node</div></div></div>
+        <div class="node-detail">Assembles a JSON context object per contact: first_name, company, job_title, company_size, industry, segment_label, num_locations, source. This becomes the Claude prompt input. The richer the context, the more specific the email.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#639922">
+        <div class="node-top"><div class="node-icon" style="background:#EAF3DE">🤖</div><div><div class="node-name">Claude API — write email</div><div class="node-type">claude-sonnet · JSON output</div></div></div>
+        <div class="node-detail">POST to api.anthropic.com/v1/messages. System prompt: senior Eulerity growth strategist, peer-to-peer tone, 3 paragraphs, no buzzwords, end with "would it make sense to connect for 20 minutes." User prompt passes full contact context.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#639922">
+        <div class="node-top"><div class="node-icon" style="background:#EAF3DE">✉</div><div><div class="node-name">HubSpot Single Send API</div><div class="node-type">transactional email · tracked</div></div></div>
+        <div class="node-detail">Sends via HubSpot's Single Send API — email comes from the sales rep's connected inbox, not a generic address. HubSpot automatically tracks: email opened, link clicked, replied, unsubscribed. All tracking data written to contact timeline.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 4 -->
+<div class="flow">
+  <div class="flow-header" style="background:#E6F1FB" onclick="toggleFlow('p4')">
+    <div class="flow-num" style="background:#378ADD;color:#E6F1FB">04</div>
+    <div style="flex:1">
+      <div class="flow-title" style="color:#0C447C">Real-Time Lead Scoring + Routing</div>
+      <div class="flow-sub" style="color:#185FA5">HubSpot webhooks → n8n → score updates → segment routing → sequence assignment</div>
+    </div>
+    <span id="fi-p4" style="color:#0C447C;font-size:18px">+</span>
+  </div>
+  <div class="flow-body" id="p4">
+    <div class="info-box">Goal: Every interaction a contact has with Eulerity's emails is tracked and scored in real time. Hot leads get faster follow-up. Cold leads stay in nurture. The system routes each contact to the right sequence based on their actual behavior — not assumptions.</div>
+    <div class="nodes">
+      <div class="node" onclick="toggle(this)" style="border-color:#378ADD">
+        <div class="node-top"><div class="node-icon" style="background:#E6F1FB">🔔</div><div><div class="node-name">HubSpot webhook</div><div class="node-type">fires on email event</div></div></div>
+        <div class="node-detail">HubSpot sends real-time webhook to n8n whenever: email opened, link clicked, reply received. n8n Webhook Trigger listens at a public URL. Payload: contact ID, event type, timestamp, email ID, which URL was clicked.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#378ADD">
+        <div class="node-top"><div class="node-icon" style="background:#E6F1FB">🔢</div><div><div class="node-name">Score increment logic</div><div class="node-type">n8n Switch node</div></div></div>
+        <div class="node-detail">Routes by event type. Opened: +10 points. Link clicked: +25 points. Reply received: +50 points. Calendar link clicked: +100 points. Reads current score from HubSpot contact property, adds increment, writes back via PATCH API.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#378ADD">
+        <div class="node-top"><div class="node-icon" style="background:#E6F1FB">⟺</div><div><div class="node-name">Score threshold routing</div><div class="node-type">n8n IF node</div></div></div>
+        <div class="node-detail">Score 0–25: stays in cold nurture, no action. Score 26–75: warm tag, different email cadence. Score 76–149: hot tag, AI reply agent activates immediately. Score 150+: Sales Qualified Lead — immediate sales alert.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#378ADD">
+        <div class="node-top"><div class="node-icon" style="background:#E6F1FB">📊</div><div><div class="node-name">HubSpot stage update</div><div class="node-type">PATCH · lifecycle + score</div></div></div>
+        <div class="node-detail">Updates HubSpot contact: gtm_lead_score property = new score value. Lifecycle stage updates automatically based on threshold. All scoring data visible in HubSpot contact record and pipeline views. Sales team sees who is hot in real time.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 5 -->
+<div class="flow">
+  <div class="flow-header" style="background:#FAECE7" onclick="toggleFlow('p5')">
+    <div class="flow-num" style="background:#D85A30;color:#FAECE7">05</div>
+    <div style="flex:1">
+      <div class="flow-title" style="color:#712B13">AI Reply Agent</div>
+      <div class="flow-sub" style="color:#993C1D">Reply received → classify intent → draft contextual response → send in same thread</div>
+    </div>
+    <span id="fi-p5" style="color:#712B13;font-size:18px">+</span>
+  </div>
+  <div class="flow-body" id="p5">
+    <div class="info-box">Goal: When a contact replies to an Eulerity email, the AI reads the reply, understands the intent, and sends a contextual response — in the same email thread — within seconds. The agent has memory of the original email it sent, so every response feels like a natural continuation of the conversation.</div>
+    <div class="nodes">
+      <div class="node" onclick="toggle(this)" style="border-color:#D85A30">
+        <div class="node-top"><div class="node-icon" style="background:#FAECE7">📬</div><div><div class="node-name">Reply webhook trigger</div><div class="node-type">HubSpot · reply event</div></div></div>
+        <div class="node-detail">HubSpot detects incoming reply and fires webhook to n8n. Payload includes: reply text, contact ID, thread ID, message ID. n8n pulls the contact's full enriched profile and previous email thread from HubSpot timeline API to give the AI complete context.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#D85A30">
+        <div class="node-top"><div class="node-icon" style="background:#FAECE7">🔍</div><div><div class="node-name">Classify reply intent</div><div class="node-type">Claude Haiku · fast + cheap</div></div></div>
+        <div class="node-detail">First Claude call — classification only. Prompt: classify this reply as exactly one of: INTERESTED / OBJECTION / NOT_NOW / UNSUBSCRIBE. Uses claude-haiku for speed and cost efficiency. Returns a single label. n8n Switch node routes based on that label.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#D85A30">
+        <div class="node-top"><div class="node-icon" style="background:#FAECE7">✍</div><div><div class="node-name">Draft contextual response</div><div class="node-type">Claude Sonnet · memory-aware</div></div></div>
+        <div class="node-detail">Second Claude call — response drafting. Uses full context: thread history, contact enrichment data, intent label, Eulerity product details. INTERESTED: acknowledge, suggest specific next step. OBJECTION: address with relevant proof point. NOT_NOW: acknowledge timing, offer to reconnect in 30 days.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#D85A30">
+        <div class="node-top"><div class="node-icon" style="background:#FAECE7">↩</div><div><div class="node-name">Reply in same thread</div><div class="node-type">HubSpot · same thread</div></div></div>
+        <div class="node-detail">AI-drafted reply sent via HubSpot — in the same email thread as the original. Contact sees it as a natural continuation of the conversation. Response time: under 15 minutes from reply received to reply sent. All replies logged in HubSpot contact timeline.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 6 -->
+<div class="flow">
+  <div class="flow-header" style="background:#E1F5EE" onclick="toggleFlow('p6')">
+    <div class="flow-num" style="background:#1D9E75;color:#E1F5EE">06</div>
+    <div style="flex:1">
+      <div class="flow-title" style="color:#085041">Sales Handoff + Post-Call Routing</div>
+      <div class="flow-sub" style="color:#0F6E56">Calendar booked → HubSpot deal created → sales briefing sent → post-call follow-up routed</div>
+    </div>
+    <span id="fi-p6" style="color:#085041;font-size:18px">+</span>
+  </div>
+  <div class="flow-body" id="p6">
+    <div class="info-box">Goal: When a contact books a sales call, the system takes over everything the sales rep would otherwise do manually — creates the deal, compiles a full briefing on the contact, notifies the right person, and routes the outcome after the call automatically.</div>
+    <div class="nodes">
+      <div class="node" onclick="toggle(this)" style="border-color:#1D9E75">
+        <div class="node-top"><div class="node-icon" style="background:#E1F5EE">📅</div><div><div class="node-name">Calendly booking webhook</div><div class="node-type">invitee.created event</div></div></div>
+        <div class="node-detail">Contact clicks calendar link in Eulerity email and books a slot. Calendly fires webhook to n8n immediately. Payload: contact email, meeting time, event type, pre-meeting form answers. n8n matches the email to the HubSpot contact record via search API.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#1D9E75">
+        <div class="node-top"><div class="node-icon" style="background:#E1F5EE">💼</div><div><div class="node-name">HubSpot deal created</div><div class="node-type">Deals API · auto-populate</div></div></div>
+        <div class="node-detail">n8n creates Deal in HubSpot linked to contact and company. Deal name: "Sales Call — [Company] — [Date]". Pipeline stage: Meeting Scheduled. Deal auto-populates with all enrichment data, lead score, and meeting details. Contact lifecycle stage → Sales Qualified Lead.</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node" onclick="toggle(this)" style="border-color:#1D9E75">
+        <div class="node-top"><div class="node-icon" style="background:#E1F5EE">📋</div><div><div class="node-name">Sales briefing packet</div><div class="node-type">Slack notification</div></div></div>
+        <div class="node-detail">n8n sends structured Slack message to assigned sales rep: contact name, company, title, lead score, segment, summary of the full email thread, what they responded to, pre-meeting form answers, HubSpot deal link, and meeting time. Rep walks in knowing the prospect — no manual research required.</div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#7F77DD"></div>Phase 1 — Email validation</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#EF9F27"></div>Phase 2 — Clay enrichment</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#639922"></div>Phase 3 — AI email send</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>Phase 4 — Lead scoring</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#D85A30"></div>Phase 5 — AI reply agent</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>Phase 6 — Sales handoff</div>
+</div>
+<p class="hint">click any phase to expand · click any node to see full configuration details</p>
+
+<script>
+function toggle(el) { el.classList.toggle('expanded'); }
+function toggleFlow(id) {
+  const body = document.getElementById(id);
+  const icon = document.getElementById('fi-' + id);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  icon.textContent = isOpen ? '+' : '−';
+}
+</script>
+</div>
