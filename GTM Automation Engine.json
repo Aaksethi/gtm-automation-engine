@@ -1,0 +1,772 @@
+{
+  "name": "Eulerity's GTM Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        -176
+      ],
+      "id": "852ad827-9c8c-432d-a06e-93001c632176",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13ab8ghU6O4cUerhQSIwdKw1UN_wKWCQuWyvinu9wdPc",
+          "mode": "list",
+          "cachedResultName": "Eulerity Database",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13ab8ghU6O4cUerhQSIwdKw1UN_wKWCQuWyvinu9wdPc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13ab8ghU6O4cUerhQSIwdKw1UN_wKWCQuWyvinu9wdPc/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        16,
+        -176
+      ],
+      "id": "ae03e78f-b8b0-4ed7-9ec2-dca395baf5a6",
+      "name": "Hubspot Leads",
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3cncXotzzqn7LFBA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "13ab8ghU6O4cUerhQSIwdKw1UN_wKWCQuWyvinu9wdPc",
+          "mode": "list",
+          "cachedResultName": "Eulerity Database",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13ab8ghU6O4cUerhQSIwdKw1UN_wKWCQuWyvinu9wdPc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13ab8ghU6O4cUerhQSIwdKw1UN_wKWCQuWyvinu9wdPc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Industry": "={{ $json.body.industry }}",
+            "Franchise Count": "={{ $json.body.franchise_count }}",
+            "Email": "={{ $json.body.email }}",
+            "Description": "={{ $json.body.description }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "First Name",
+              "displayName": "First Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Last Name",
+              "displayName": "Last Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Is your brand currently partnered with Eulerity?",
+              "displayName": "Is your brand currently partnered with Eulerity?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "What best describes you",
+              "displayName": "What best describes you",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Role",
+              "displayName": "Role",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company Domain",
+              "displayName": "Company Domain",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Franchise Count",
+              "displayName": "Franchise Count",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        48,
+        208
+      ],
+      "id": "e7b126a0-2346-48d8-b38b-73d034f2a0ba",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3cncXotzzqn7LFBA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "75d10694-6596-4312-b31b-0ea6ee7e9e00",
+              "leftValue": "={{ $json.Industry }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        -176
+      ],
+      "id": "ddb1bfc4-5bdf-4292-a829-aa1f4dbe0a25",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        256,
+        80
+      ],
+      "id": "8ec9d20a-a666-44f6-a64a-29d679192a8a",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "9inLouCA5YBbR6Wy",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{$('Clay Enrichment Revert').item.json.body.email}}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        48
+      ],
+      "id": "85133479-df65-4980-935f-53084d8155b4",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.output;\nconst parsed = JSON.parse(raw);\nreturn [{json: {\n  subject: parsed.subject,\n  body: parsed.body,\n  to_email: $('Clay Enrichment Revert').item.json.body.email\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        576,
+        208
+      ],
+      "id": "c9d4cac2-90a5-4d33-9ce0-693019aa39a8",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13ab8ghU6O4cUerhQSIwdKw1UN_wKWCQuWyvinu9wdPc",
+          "mode": "list",
+          "cachedResultName": "Eulerity Database",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13ab8ghU6O4cUerhQSIwdKw1UN_wKWCQuWyvinu9wdPc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13ab8ghU6O4cUerhQSIwdKw1UN_wKWCQuWyvinu9wdPc/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email",
+              "lookupValue": "={{ $json.From.match(/<([^>]+)>/)?.[1] || $json.From }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        32,
+        464
+      ],
+      "id": "b5039fe7-13d2-4e5b-b745-56cc91a5851f",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3cncXotzzqn7LFBA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{$json.message_id}}",
+        "emailType": "text",
+        "message": "={{$json.body}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        464
+      ],
+      "id": "a98334f5-7207-4489-9bea-87641d31e72d",
+      "name": "Reply to a message",
+      "webhookId": "1d079995-dcc8-4fd9-9e9c-66e4c446f3ab",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "kvgINYqfyVteWDhM",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        720
+      ],
+      "id": "d621fc8e-b949-4309-b706-19f0a2171c5e",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "9inLouCA5YBbR6Wy",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{$('Interested Clients').item.json.threadId}}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        336,
+        608
+      ],
+      "id": "a650813a-6ed8-4e44-98dc-25060b00c62e",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.output;\nconst parsed = JSON.parse(raw);\nreturn [{json: {\n  subject: parsed.subject,\n  body: parsed.body,\n  message_id: $('Interested Clients').item.json.id,\n  thread_id: $('Interested Clients').item.json.threadId\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        592,
+        464
+      ],
+      "id": "1d4eb8ea-3144-4966-aa2a-af392613f0a6",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.clay.com/v3/sources/webhook/pull-in-data-from-a-webhook-d50d2795-3017-4f69-b45e-14fc0336e2a2",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "first_name",
+              "value": "={{ $json['First Name'] }}"
+            },
+            {
+              "name": "last_name",
+              "value": "={{ $json['Last Name'] }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.Email }}"
+            },
+            {
+              "name": "company-domain",
+              "value": "={{ $json['Company Domain'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        448,
+        -192
+      ],
+      "id": "304db7e6-bb2f-45f1-9b3b-3b3fdd651ab4",
+      "name": "HTTP Request (Clay Enrichment)"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "6bb9485a-9f3f-4a04-a3ad-9e2d26295e63",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -192,
+        208
+      ],
+      "id": "735a79a1-6136-4a64-bd41-fe5be7ef764c",
+      "name": "Clay Enrichment Revert",
+      "webhookId": "6bb9485a-9f3f-4a04-a3ad-9e2d26295e63"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json.to_email}}",
+        "subject": "={{$json.subject}}",
+        "emailType": "text",
+        "message": "={{$json.body}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        816,
+        208
+      ],
+      "id": "2225d0f0-7ee9-4d83-80a4-ef6b8a242cd8",
+      "name": "Outbound Campaign",
+      "webhookId": "cd14bfb7-046d-4d29-ad6a-7e030a2b16ba",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "kvgINYqfyVteWDhM",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -208,
+        464
+      ],
+      "id": "23015932-6c2f-4e67-b9a7-0104d19f0609",
+      "name": "Interested Clients",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "kvgINYqfyVteWDhM",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=A contact has replied to your Eulerity outreach email.\n\nContact: {{$('Get row(s) in sheet').item.json['First Name']}} {{$('Get row(s) in sheet').item.json['Last Name']}}\nCompany: {{$('Get row(s) in sheet').item.json['Company']}}\nIndustry: {{$('Get row(s) in sheet').item.json['Industry']}}\nFranchise Scale: {{$('Get row(s) in sheet').item.json['Franchise Count']}}\n\nTheir reply: {{$('Interested Clients').item.json.snippet}}\n\nRead their reply carefully. Understand their intent. Write a specific, warm response that moves the conversation forward toward a 20-minute discovery call. Return JSON only with keys: subject and body.",
+        "options": {
+          "systemMessage": "You are a senior growth strategist at Eulerity, an AI marketing automation platform for multi-location franchise brands. You handle replies to cold outreach emails. Read the contact's reply carefully and respond appropriately. If interested — acknowledge warmly and suggest a specific time to connect. If objection — address their specific concern with a relevant Eulerity proof point. If not now — acknowledge timing gracefully and offer to reconnect in 30 days. Always be specific, warm, and peer-to-peer in tone. Never use buzzwords. Return JSON only with two keys: subject and body."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        240,
+        464
+      ],
+      "id": "511efa6a-f344-43c5-81e9-97d767007dd5",
+      "name": "Conversation Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write a cold outreach email for Eulerity to this contact:\n\nName: {{$('Clay Enrichment Revert').item.json.body.first_name}} {{$('Clay Enrichment Revert').item.json.body.last_name}}\nEmail: {{$('Clay Enrichment Revert').item.json.body.email}}\nIndustry: {{$('Clay Enrichment Revert').item.json.body.industry}}\nFranchise Scale: {{$('Clay Enrichment Revert').item.json.body.franchise_count}}\n\nWrite 3 short paragraphs. Peer-to-peer tone. Reference their industry and franchise scale specifically. End with \"would it make sense to connect for 20 minutes.\" Return JSON only with keys: subject and body.",
+        "options": {
+          "systemMessage": "You are a senior growth strategist at Eulerity, an AI marketing automation platform for multi-location franchise brands. You write cold outreach emails that feel human and researched. Never use phrases like \"I hope this finds you well\", \"I'd love to\", \"touch base\". No bullet points. Maximum 3 short paragraphs. End with \"would it make sense to connect for 20 minutes.\" Return JSON only with two keys: subject and body."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        256,
+        208
+      ],
+      "id": "93e78c86-77e3-4c3b-b1ce-c343b1834e83",
+      "name": "Initial Outreach Agent"
+    },
+    {
+      "parameters": {
+        "content": "## Workflow 1 \n**CRM Data going to Clay for enrichment** ",
+        "height": 96
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -624,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "677dba8e-5264-4b47-ac91-e654238f56a4",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Workflow 2\n**Bringing back Clay enrichment data to the CRM and sending outreach campaign via AI agent** "
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -624,
+        176
+      ],
+      "typeVersion": 1,
+      "id": "9d3fd2dd-e51d-41ab-ba2d-374ae13dceba",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Workflow 3 \n**Replying to all the emails who showed interest** "
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -624,
+        416
+      ],
+      "typeVersion": 1,
+      "id": "8a67af0a-dad8-4088-85d9-c77920b192a3",
+      "name": "Sticky Note2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Hubspot Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hubspot Leads": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request (Clay Enrichment)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Initial Outreach Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Initial Outreach Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Initial Outreach Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Outbound Campaign",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Conversation Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Conversation Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Conversation Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Reply to a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request (Clay Enrichment)": {
+      "main": [
+        []
+      ]
+    },
+    "Clay Enrichment Revert": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interested Clients": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initial Outreach Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "bbbf62a1-3e23-4eef-823f-f2b08c4a427a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "58d7cc2b8bdbb9303169a0b01c86c71cd2600b9428a175a8f7b84b89d7c3926c"
+  },
+  "id": "goT66DIj0DSgr2c6",
+  "tags": []
+}
