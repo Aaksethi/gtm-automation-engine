@@ -96,5 +96,5 @@ Open in browser to explore each phase and node configuration.
 **Aakash Sethi**
 Growth operator specializing in GTM systems and AI automation.
 
-[LinkedIn](your-linkedin-url) | [Portfolio](your-portfolio-url)
+[LinkedIn](https://www.linkedin.com/in/aakash-sethi/) | [Portfolio](https://aakashsethi.lovable.app)
 
