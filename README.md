@@ -89,7 +89,6 @@ Open in browser to explore each phase and node configuration.
 | Tunnel | ngrok | Cloud n8n instance |
 | AI | OpenAI | Claude API |
 
-Current working prototype runs on Google Sheets and Gmail. Architecture designed for HubSpot production deployment.
 ---
 
 ## Built By
