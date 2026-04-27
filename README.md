@@ -56,7 +56,7 @@ n8n sends reply in the same email thread via HubSpot.
 
 ## Architecture
 
-Full interactive architecture document in `https://github.com/Aaksethi/gtm-automation-engine/blob/main/eulerity_gtm_engine_full_6phase.html`
+Full interactive architecture document in `https://69e9ba4b22f4b111473bd764--cute-rabanadas-60e838.netlify.app/`
 
 Open in browser to explore each phase and node configuration.
 
